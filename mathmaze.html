@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    .container {
+      margin: 50px auto;
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+    }
+    .question-box {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    .question-number {
+      font-size: 18px;
+      font-weight: bold;
+      color: #666;
+      margin-right: 10px;
+    }
+    .question {
+      flex: 1;
+      text-align: left;
+      font-size: 20px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 50px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s ease;
+      font-size: 18px;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: dodgerblue;
+    }
+    button {
+      background-color: dodgerblue;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #1e90ff;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Math Game</h1>
+    <div id="questions"></div>
+    <button onclick="submitAnswers()">Submit Answers</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function generateQuestion(questionNumber) {
+      const operators = ['+', '-', '*', '/'];
+      const operator = operators[Math.floor(Math.random() * operators.length)];
+      let num1, num2, answer;
+
+      do {
+        num1 = Math.floor(Math.random() * 10) + 1;
+        num2 = Math.floor(Math.random() * 10) + 1;
+        switch (operator) {
+          case '+':
+            answer = num1 + num2;
+            break;
+          case '-':
+            answer = num1 - num2;
+            break;
+          case '*':
+            answer = num1 * num2;
+            break;
+          case '/':
+            answer = num1 / num2;
+            break;
+        }
+      } while (!Number.isInteger(answer) || answer < 0); // Ensure division results in integer and positive
+
+      return { question: `${num1} ${operator} ${num2}`, answer, number: questionNumber };
+    }
+
+    function displayQuestions() {
+      const questionsDiv = document.getElementById('questions');
+      questionsDiv.innerHTML = '';
+      for (let i = 1; i <= 10; i++) {
+        const question = generateQuestion(i);
+        const questionBox = document.createElement('div');
+        questionBox.classList.add('question-box');
+        questionBox.innerHTML = `
+          <span class="question-number">${question.number}.</span>
+          <span class="question">${question.question}</span>
+          <input type="text" data-answer="${question.answer}" />
+        `;
+        questionsDiv.appendChild(questionBox);
+      }
+    }
+
+    function submitAnswers() {
+      const inputs = document.querySelectorAll('input');
+      let correct = 0;
+
+      inputs.forEach(input => {
+        const userAnswer = parseFloat(input.value);
+        const correctAnswer = parseFloat(input.dataset.answer);
+        if (!isNaN(userAnswer) && userAnswer === correctAnswer) {
+          correct++;
+          input.style.backgroundColor = 'lightgreen';
+        } else {
+          input.style.backgroundColor = 'lightcoral';
+        }
+      });
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `You got ${correct} out of 10 correct.`;
+    }
+
+    window.onload = displayQuestions;
+  </script>
+</body>
+</html>

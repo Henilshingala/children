@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guessing Game</title>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f5f5f5;
+    }
+
+    #game-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      animation: colorChange 3s infinite;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Animation */
+    @keyframes colorChange {
+      0% { color: #333; }
+      50% { color: #ff0000; }
+      100% { color: #333; }
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Number Guessing Game</h1>
+    <p>Guess a number between 1 and 100:</p>
+    <input type="number" id="user-input" min="1" max="100" required>
+    <button id="check-btn">Guess</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    // JavaScript code
+    const checkBtn = document.getElementById('check-btn');
+    const userInput = document.getElementById('user-input');
+    const resultDisplay = document.getElementById('result');
+
+    // Generate a random number between 1 and 100
+    const correctAnswer = Math.floor(Math.random() * 100) + 1;
+
+    checkBtn.addEventListener('click', () => {
+      const userGuess = parseInt(userInput.value);
+
+      if (userGuess === correctAnswer) {
+        resultDisplay.textContent = "Congratulations! You guessed the correct number!";
+      } else if (userGuess < correctAnswer) {
+        resultDisplay.textContent = "Too low, try again.";
+      } else {
+        resultDisplay.textContent = "Too high, try again.";
+      }
+    });
+  </script>
+</body>
+</html>

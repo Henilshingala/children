@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .game-container {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .image-display {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto 20px auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .name-display {
+            font-size: 36px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .prev-btn,
+        .next-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .prev-btn {
+            margin-right: 20px;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .next-btn {
+            animation: slideInRight 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <img class="image-display" src="fruit1.jpg" alt="Fruit">
+        <div class="name-display">Apple</div>
+        <button class="prev-btn">Previous</button>
+        <button class="next-btn">Next</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const imageDisplay = document.querySelector(".image-display");
+            const nameDisplay = document.querySelector(".name-display");
+            const prevButton = document.querySelector(".prev-btn");
+            const nextButton = document.querySelector(".next-btn");
+
+            const fruits = [
+                { name: "Apple", image: "https://static.vecteezy.com/system/resources/thumbnails/023/290/773/small/fresh-red-apple-isolated-on-transparent-background-generative-ai-png.png" },
+                { name: "Banana", image: "https://png.pngtree.com/png-clipart/20220716/ourmid/pngtree-banana-yellow-fruit-banana-skewers-png-image_5944324.png" },
+                { name: "Orange", image: "https://pngfre.com/wp-content/uploads/orange-poster.png" },
+                { name: "Strawberry", image: "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png" },
+                { name: "Watermelon", image: "https://static.vecteezy.com/system/resources/previews/029/200/216/non_2x/watermelon-transparent-background-free-png.png" },
+                { name: "Grapes", image: "https://png.pngtree.com/png-vector/20230329/ourmid/pngtree-grape-fruit-dark-purple-summer-photo-png-image_6671310.png" },
+                { name: "Pineapple", image: "https://www.freepnglogos.com/uploads/pineapple-png/teavana-pineapple-berry-blue-herbal-tea-21.png" },
+                { name: "Mango", image: "https://pngfre.com/wp-content/uploads/mango-poster.png" },
+                { name: "Kiwi", image: "https://static.vecteezy.com/system/resources/previews/029/200/056/original/kiwi-transparent-background-free-png.png" },
+                { name: "Guava", image: "https://pngimg.com/d/guava_PNG15.png" }
+                // Add more fruits here
+            ];
+
+            let currentIndex = 0;
+
+            function updateFruit() {
+                imageDisplay.src = fruits[currentIndex].image;
+                nameDisplay.textContent = fruits[currentIndex].name;
+                imageDisplay.classList.remove("fadeIn");
+                nameDisplay.classList.remove("fadeIn");
+                void imageDisplay.offsetWidth; // Trigger reflow to restart animation
+                void nameDisplay.offsetWidth; // Trigger reflow to restart animation
+                imageDisplay.classList.add("fadeIn");
+                nameDisplay.classList.add("fadeIn");
+            }
+
+            prevButton.addEventListener("click", function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateFruit();
+                }
+            });
+
+            nextButton.addEventListener("click", function() {
+                if (currentIndex < fruits.length - 1) {
+                    currentIndex++;
+                    updateFruit();
+                }
+            });
+
+            updateFruit();
+        });
+    </script>
+</body>
+</html>

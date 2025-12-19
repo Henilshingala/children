@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .game-container {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .number-display,
+        .word-display {
+            font-size: 72px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .prev-btn,
+        .next-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .prev-btn {
+            margin-right: 20px;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .next-btn {
+            animation: slideInRight 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="number-display">0</div>
+        <div class="word-display">zero</div>
+        <button class="prev-btn">Previous</button>
+        <button class="next-btn">Next</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const numberDisplay = document.querySelector(".number-display");
+            const wordDisplay = document.querySelector(".word-display");
+            const prevButton = document.querySelector(".prev-btn");
+            const nextButton = document.querySelector(".next-btn");
+
+            const numberWords = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+                "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty",
+                "twenty-one", "twenty-two", "twenty-three", "twenty-four", "twenty-five", "twenty-six", "twenty-seven", "twenty-eight", "twenty-nine", "thirty",
+                "thirty-one", "thirty-two", "thirty-three", "thirty-four", "thirty-five", "thirty-six", "thirty-seven", "thirty-eight", "thirty-nine", "forty",
+                "forty-one", "forty-two", "forty-three", "forty-four", "forty-five", "forty-six", "forty-seven", "forty-eight", "forty-nine", "fifty",
+                "fifty-one", "fifty-two", "fifty-three", "fifty-four", "fifty-five", "fifty-six", "fifty-seven", "fifty-eight", "fifty-nine", "sixty",
+                "sixty-one", "sixty-two", "sixty-three", "sixty-four", "sixty-five", "sixty-six", "sixty-seven", "sixty-eight", "sixty-nine", "seventy",
+                "seventy-one", "seventy-two", "seventy-three", "seventy-four", "seventy-five", "seventy-six", "seventy-seven", "seventy-eight", "seventy-nine", "eighty",
+                "eighty-one", "eighty-two", "eighty-three", "eighty-four", "eighty-five", "eighty-six", "eighty-seven", "eighty-eight", "eighty-nine", "ninety",
+                "ninety-one", "ninety-two", "ninety-three", "ninety-four", "ninety-five", "ninety-six", "ninety-seven", "ninety-eight", "ninety-nine", "one hundred"
+            ];
+
+            const colors = [
+            "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB",
+            "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8","#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8",
+            "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54","#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54","#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54","#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54",
+            "#ED5564", "#ED5564", "#ED5564", "#ED5564", "#ED5564","#ED5564", "#ED5564", "#ED5564", "#ED5564", "#ED5564","#ED5564", "#ED5564", "#ED5564", "#ED5564", "#ED5564","#ED5564", "#ED5564", "#ED5564", "#ED5564", "#ED5564",
+            "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32",
+            ];
+
+            let currentNumber = 0;
+
+            function updateNumber() {
+                numberDisplay.textContent = currentNumber;
+                wordDisplay.textContent = numberWords[currentNumber];
+                numberDisplay.style.color = colors[currentNumber];
+                wordDisplay.style.color = colors[currentNumber];
+                numberDisplay.classList.remove("fadeIn");
+                wordDisplay.classList.remove("fadeIn");
+                void numberDisplay.offsetWidth; // Trigger reflow to restart animation
+                void wordDisplay.offsetWidth; // Trigger reflow to restart animation
+                numberDisplay.classList.add("fadeIn");
+                wordDisplay.classList.add("fadeIn");
+            }
+
+            prevButton.addEventListener("click", function() {
+                if (currentNumber > 0) {
+                    currentNumber--;
+                    updateNumber();
+                }
+            });
+
+            nextButton.addEventListener("click", function() {
+                if (currentNumber < 100) {
+                    currentNumber++;
+                    updateNumber();
+                }
+            });
+
+            updateNumber();
+        });
+    </script>
+</body>
+</html>

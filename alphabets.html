@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .game-container {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .number-display,
+        .word-display {
+            font-size: 72px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .prev-btn,
+        .next-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .prev-btn {
+            margin-right: 20px;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .next-btn {
+            animation: slideInRight 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="number-display">A</div>
+        <div class="word-display">A</div>
+        <button class="prev-btn">Previous</button>
+        <button class="next-btn">Next</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const numberDisplay = document.querySelector(".number-display");
+            const wordDisplay = document.querySelector(".word-display");
+            const prevButton = document.querySelector(".prev-btn");
+            const nextButton = document.querySelector(".next-btn");
+
+            const upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+            const lowerAlphabet = "abcdefghijklmnopqrstuvwxyz".split('');
+            const colors = [
+                "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", "#AC92EB", 
+                "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8", "#4FC1E8",
+                "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54", "#FFCE54",
+                "#ED5564", "#ED5564", "#ED5564", "#ED5564", "#ED5564",
+                "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", "#9ACD32", 
+            ];
+
+            let currentIndex = 0;
+
+                function updateAlphabet() {
+                    numberDisplay.textContent = upperAlphabet[currentIndex];
+                    wordDisplay.textContent = lowerAlphabet[currentIndex];
+                    numberDisplay.style.color = colors[currentIndex];
+                    wordDisplay.style.color = colors[currentIndex];
+                    numberDisplay.classList.remove("fadeIn");
+                    wordDisplay.classList.remove("fadeIn");
+                    void numberDisplay.offsetWidth; // Trigger reflow to restart animation
+                    void wordDisplay.offsetWidth; // Trigger reflow to restart animation
+                    numberDisplay.classList.add("fadeIn");
+                    wordDisplay.classList.add("fadeIn");
+                }
+
+                prevButton.addEventListener("click", function() {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateAlphabet();
+                    }
+                });
+
+                nextButton.addEventListener("click", function() {
+                    if (currentIndex < 25) {
+                        currentIndex++;
+                        updateAlphabet();
+                    }
+                });
+
+                updateAlphabet();
+            });
+        </script>
+    </body>
+    </html>

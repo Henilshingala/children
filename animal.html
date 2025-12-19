@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .game-container {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .image-display {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 20px auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .name-display {
+            font-size: 36px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .prev-btn,
+        .next-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .prev-btn {
+            margin-right: 20px;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .next-btn {
+            animation: slideInRight 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <img class="image-display" src="animal1.jpg" alt="Animal">
+        <div class="name-display">Lion</div>
+        <button class="prev-btn">Previous</button>
+        <button class="next-btn">Next</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const imageDisplay = document.querySelector(".image-display");
+            const nameDisplay = document.querySelector(".name-display");
+            const prevButton = document.querySelector(".prev-btn");
+            const nextButton = document.querySelector(".next-btn");
+            const animals = [
+    { name: "Lion", image: "https://static.vecteezy.com/system/resources/previews/024/705/107/original/lion-with-ai-generated-free-png.png" },
+    { name: "Elephant", image: "https://png.pngtree.com/png-clipart/20230411/original/pngtree-elephant-asian-elephant-png-image_9043910.png" },
+    { name: "Monkey", image: "https://png.pngtree.com/png-clipart/20231003/original/pngtree-monkey-png-with-ai-generated-png-image_13246177.png" },
+    { name: "Giraffe", image: "https://static.vecteezy.com/system/resources/previews/024/705/043/original/giraffe-with-ai-generated-free-png.png" },
+    { name: "Tiger", image: "https://png.pngtree.com/png-clipart/20230508/original/pngtree-tiger-walking-wildlife-scene-transparent-background-png-image_9153495.png" },
+    { name: "Zebra", image: "https://static.vecteezy.com/system/resources/previews/024/865/619/original/zebra-with-ai-generated-free-png.png" },
+    { name: "Panda", image: "https://static.vecteezy.com/system/resources/previews/027/246/837/non_2x/panda-bear-isolated-on-transparent-background-ai-generated-png.png" },
+    { name: "Kangaroo", image: "https://pngfre.com/wp-content/uploads/Kangaroo-13.png" }, // Corrected URL
+    { name: "Penguin", image: "https://static.vecteezy.com/system/resources/previews/018/248/994/original/penguin-on-a-transparent-background-png.png" },
+    { name: "Dolphin", image: "https://static.vecteezy.com/system/resources/previews/024/705/062/non_2x/dolphin-with-ai-generated-free-png.png" }
+];
+
+            let currentIndex = 0;
+
+            function updateAnimal() {
+                imageDisplay.src = animals[currentIndex].image;
+                nameDisplay.textContent = animals[currentIndex].name;
+                imageDisplay.classList.remove("fadeIn");
+                nameDisplay.classList.remove("fadeIn");
+                void imageDisplay.offsetWidth; // Trigger reflow to restart animation
+                void nameDisplay.offsetWidth; // Trigger reflow to restart animation
+                imageDisplay.classList.add("fadeIn");
+                nameDisplay.classList.add("fadeIn");
+            }
+
+            prevButton.addEventListener("click", function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateAnimal();
+                }
+            });
+
+            nextButton.addEventListener("click", function() {
+                if (currentIndex < animals.length - 1) {
+                    currentIndex++;
+                    updateAnimal();
+                }
+            });
+
+            updateAnimal();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alphabet Puzzle</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  input[type="text"] {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: dodgerblue;
+  }
+  #result {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+<h1>Alphabet Puzzle</h1>
+<div class="container">
+  <div class="row">
+    <input type="text" maxlength="1" id="input-A" oninput="focusNextInput('B', this)">
+    <input type="text" maxlength="1" id="input-B" oninput="focusNextInput('C', this)">
+    <input type="text" maxlength="1" id="input-C" oninput="focusNextInput('D', this)">
+    <input type="text" maxlength="1" id="input-D" oninput="focusNextInput('E', this)">
+    <input type="text" maxlength="1" id="input-E" oninput="focusNextInput('F', this)">
+    <input type="text" maxlength="1" id="input-F" oninput="focusNextInput('G', this)">
+    <input type="text" maxlength="1" id="input-G" oninput="focusNextInput('H', this)">
+  </div>
+  <div class="row">
+    <input type="text" maxlength="1" id="input-H" oninput="focusNextInput('I', this)">
+    <input type="text" maxlength="1" id="input-I" oninput="focusNextInput('J', this)">
+    <input type="text" maxlength="1" id="input-J" oninput="focusNextInput('K', this)">
+    <input type="text" maxlength="1" id="input-K" oninput="focusNextInput('L', this)">
+    <input type="text" maxlength="1" id="input-L" oninput="focusNextInput('M', this)">
+    <input type="text" maxlength="1" id="input-M" oninput="focusNextInput('N', this)">
+    <input type="text" maxlength="1" id="input-N" oninput="focusNextInput('O', this)">
+  </div>
+  <div class="row">
+    <input type="text" maxlength="1" id="input-O" oninput="focusNextInput('P', this)">
+    <input type="text" maxlength="1" id="input-P" oninput="focusNextInput('Q', this)">
+    <input type="text" maxlength="1" id="input-Q" oninput="focusNextInput('R', this)">
+    <input type="text" maxlength="1" id="input-R" oninput="focusNextInput('S', this)">
+    <input type="text" maxlength="1" id="input-S" oninput="focusNextInput('T', this)">
+    <input type="text" maxlength="1" id="input-T" oninput="focusNextInput('U', this)">
+    <input type="text" maxlength="1" id="input-U" oninput="focusNextInput('V', this)">
+  </div>
+  <div class="row">
+    <input type="text" maxlength="1" id="input-V" oninput="focusNextInput('W', this)">
+    <input type="text" maxlength="1" id="input-W" oninput="focusNextInput('X', this)">
+    <input type="text" maxlength="1" id="input-X" oninput="focusNextInput('Y', this)">
+    <input type="text" maxlength="1" id="input-Y" oninput="focusNextInput('Z', this)">
+    <input type="text" maxlength="1" id="input-Z" oninput="checkPuzzle()">
+  </div>
+</div>
+<div id="result"></div>
+
+<script>
+  // Function to focus on the next input box
+  function focusNextInput(nextId, currentInput) {
+    if (currentInput.value !== "") {
+      document.getElementById("input-" + nextId).focus();
+    }
+  }
+
+  // Function to check if the puzzle is solved
+  function checkPuzzle() {
+    const inputs = document.querySelectorAll('input[type="text"]');
+    let userInput = '';
+    inputs.forEach(input => userInput += input.value.toUpperCase());
+    const correctOrder = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const resultElement = document.getElementById('result');
+
+    if (userInput === correctOrder) {
+      resultElement.textContent = 'Congratulations! You solved the puzzle!';
+      resultElement.style.color = 'green';
+    } else {
+      resultElement.textContent = 'Oops! Something went wrong. Try again!';
+      resultElement.style.color = 'red';
+    }
+  }
+</script>
+</body>
+</html>

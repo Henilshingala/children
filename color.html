@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .game-container {
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .color-box {
+            width: 120px;
+            height: 120px;
+            margin: 10px auto;
+            display: block;
+            border: 1px solid #000;
+        }
+
+        .color-name {
+            font-size: 50px;
+        }
+
+        .prev-btn,
+        .next-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .prev-btn {
+            margin-right: 20px;
+            animation: slideInLeft 1s ease-in-out;
+        }
+
+        .next-btn {
+            animation: slideInRight 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="color-container">
+            <!-- Color box and name will be dynamically added here -->
+        </div>
+        <div class="color-name"></div>
+        <button class="prev-btn">Previous</button>
+        <button class="next-btn">Next</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const colorContainer = document.querySelector(".color-container");
+            const colorName = document.querySelector(".color-name");
+            const prevButton = document.querySelector(".prev-btn");
+            const nextButton = document.querySelector(".next-btn");
+
+            const colors = [
+                { name: "Red", value: "#FF0000" },
+                { name: "Orange", value: "#FFA500" },
+                { name: "Yellow", value: "#FFFF00" },
+                { name: "Green", value: "#008000" },
+                { name: "Blue", value: "#0000FF" },
+                { name: "Indigo", value: "#4B0082" },
+                { name: "Violet", value: "#800080" },
+                { name: "Cyan", value: "#00FFFF" },
+                { name: "Magenta", value: "#FF00FF" },
+                { name: "Lime", value: "#00FF00" },
+                { name: "Pink", value: "#FFC0CB" },
+                { name: "Brown", value: "#A52A2A" },
+                { name: "Teal", value: "#008080" },
+                { name: "Peach", value: "#FFE5B4" },
+                { name: "Silver", value: "#C0C0C0" }
+            ];
+
+            let currentIndex = 0;
+
+            function updateColor() {
+                const color = colors[currentIndex];
+                colorContainer.innerHTML = '';
+                const colorBox = document.createElement('div');
+                colorBox.classList.add('color-box');
+                colorBox.style.backgroundColor = color.value;
+                colorContainer.appendChild(colorBox);
+                colorName.textContent = color.name;
+            }
+
+            prevButton.addEventListener("click", function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateColor();
+                }
+            });
+
+            nextButton.addEventListener("click", function() {
+                if (currentIndex < colors.length - 1) {
+                    currentIndex++;
+                    updateColor();
+                }
+            });
+
+            updateColor();
+        });
+    </script>
+</body>
+</html>

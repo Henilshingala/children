@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling Guess Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .word-container {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        input[type="text"], button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"] {
+            width: 250px;
+            border: 2px solid #ccc;
+        }
+
+        input[type="text"]:focus {
+            border-color: dodgerblue;
+        }
+
+        button {
+            background-color: dodgerblue;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1e90ff;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spelling Guess Game</h1>
+        <p>Guess the correct spelling of the word:</p>
+        <div class="word-container">
+            <span id="word"></span>
+        </div>
+        <input type="text" id="guessInput" placeholder="Type your guess here">
+        <button id="guessButton">Guess</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Define arrays of words for each difficulty level
+        const easyWords = ['cat', 'dog', 'bird', 'tree', 'sun'];
+        const mediumWords = ['computer', 'banana', 'piano', 'guitar', 'movie'];
+        const hardWords = ['cucumber', 'algorithm', 'encyclopedia', 'phenomenon', 'xylophone'];
+
+        // Get random word from each category
+        let easyWord = easyWords[Math.floor(Math.random() * easyWords.length)];
+        let mediumWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
+        let hardWord = hardWords[Math.floor(Math.random() * hardWords.length)];
+
+        // Get DOM elements
+        const wordElement = document.getElementById('word');
+        const guessInput = document.getElementById('guessInput');
+        const guessButton = document.getElementById('guessButton');
+        const message = document.getElementById('message');
+
+        // Initialize the game
+        function init() {
+            displayWord();
+        }
+
+        // Display the word for reference
+        function displayWord() {
+            let currentWord;
+            if (randomDifficulty() === 1) {
+                currentWord = easyWord;
+            } else if (randomDifficulty() === 2) {
+                currentWord = mediumWord;
+            } else {
+                currentWord = hardWord;
+            }
+            wordElement.textContent = currentWord;
+            // Set the attribute for the text input
+            guessInput.setAttribute('data-word', currentWord);
+        }
+
+        // Check if the guessed word is correct
+        function checkGuess() {
+            const guess = guessInput.value.toLowerCase();
+            const currentWord = guessInput.getAttribute('data-word');
+            if (guess === currentWord) {
+                message.textContent = 'Congratulations! You guessed the word correctly!';
+            } else {
+                message.textContent = 'Oops! Incorrect guess. Try again!';
+            }
+            // Clear input field after checking guess
+            guessInput.value = '';
+        }
+
+        // Generate a random number for difficulty
+        function randomDifficulty() {
+            return Math.floor(Math.random() * 3) + 1; // Generates a random number between 1 and 3
+        }
+
+        // Event listener for guess button
+        guessButton.addEventListener('click', checkGuess);
+
+        // Call init function to start the game
+        init();
+    </script>
+</body>
+</html>
